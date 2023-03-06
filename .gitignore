@@ -1,6 +1,6 @@
-
 # dependencies
 /node_modules
+/client/node_modules
 /.pnp
 .pnp.js
 
@@ -9,8 +9,10 @@
 
 # production
 /build
+/client/build
 
 .env
+/client/.eslintcache
 
 # misc
 .DS_Store
