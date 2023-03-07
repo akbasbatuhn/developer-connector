@@ -15,6 +15,7 @@
 /client/.eslintcache
 
 # misc
+/client/.DS_Store
 .DS_Store
 .env.local
 .env.development.local
