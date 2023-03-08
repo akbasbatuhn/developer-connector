@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import { setAlert } from "../../store/alerts/alert";
+import { register } from "../../store/user/user";
 
 const defaultFormFields = {
   name: "",
@@ -13,7 +14,7 @@ const defaultFormFields = {
   confirmPassword: ""
 };
 
-const Register = ({ setAlert }) => {
+const Register = ({ setAlert, register }) => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { name, email, password, confirmPassword } = formFields;
 
@@ -32,7 +33,7 @@ const Register = ({ setAlert }) => {
     if (password !== confirmPassword) {
       setAlert("Passwords do not match", "danger");
     } else {
-      console.log("Success");
+      register({ name, email, password });
     }
   };
 
@@ -49,7 +50,6 @@ const Register = ({ setAlert }) => {
               type="text"
               placeholder="Name"
               name="name"
-              required
               onChange={onChangeHandler}
               value={name}
             />
@@ -61,7 +61,6 @@ const Register = ({ setAlert }) => {
               name="email"
               onChange={onChangeHandler}
               value={email}
-              required
             />
             <small className="form-text">
               This site uses Gravatar so if you want a profile image, use a
@@ -99,7 +98,8 @@ const Register = ({ setAlert }) => {
 };
 
 Register.propTypes = {
-  setAlert: PropTypes.func.isRequired
+  setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired
 };
 
-export default connect(null, { setAlert })(Register);
+export default connect(null, { setAlert, register })(Register);
