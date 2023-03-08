@@ -2,7 +2,7 @@ import axios from "axios";
 
 import setAuthToken from "../../utils/user.utils";
 
-import { setAlert } from "../alerts/alert";
+import { setAlert } from "../alerts/alert.action";
 import { USER_ACTION_TYPES } from "./user.types";
 
 // Load User

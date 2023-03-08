@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 import PropTypes from "prop-types";
 
-import { setAlert } from "../../store/alerts/alert";
-import { register } from "../../store/user/user";
+import { setAlert } from "../../store/alerts/alert.action";
+import { register } from "../../store/user/user.action";
 
 const defaultFormFields = {
   name: "",

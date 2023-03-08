@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 
-import { loadUser } from "./store/user/user";
+import { loadUser } from "./store/user/user.action";
 import store from "./store/store";
 import setAuthToken from "./utils/user.utils";
 
