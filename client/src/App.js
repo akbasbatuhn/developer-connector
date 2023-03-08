@@ -1,5 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
+
+import { loadUser } from "./store/user/user";
+import store from "./store/store";
+import setAuthToken from "./utils/user.utils";
 
 import Navigation from "./routes/Navigation";
 import Landing from "./components/layout/Landing";
@@ -10,7 +14,14 @@ import { Navbar } from "./components/layout/Navbar";
 
 import "./App.css";
 
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
+
 const App = () => {
+  useEffect(() => {
+    store.dispatch(loadUser);
+  }, []);
   return (
     <>
       <Navbar />

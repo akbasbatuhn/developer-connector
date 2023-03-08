@@ -11,9 +11,19 @@ export const userReducer = (state = INITIAL_STATE, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case USER_ACTION_TYPES.USER_LOADED:
+      return {
+        ...state,
+        isAuthenticated: true,
+        isLoading: false,
+        user: payload
+      };
+
     case USER_ACTION_TYPES.REGISTER_SUCCESS:
       localStorage.setItem("token", payload.token);
       return { ...state, ...payload, isAuthenticated: true, isLoading: false };
+
+    case USER_ACTION_TYPES.AUTH_ERROR:
     case USER_ACTION_TYPES.REGISTER_FAILED:
       localStorage.removeItem("token");
       return {
@@ -22,6 +32,7 @@ export const userReducer = (state = INITIAL_STATE, action) => {
         isAuthenticated: false,
         isLoading: false
       };
+
     default:
       return state;
   }
