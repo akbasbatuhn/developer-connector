@@ -34,7 +34,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
   };
 
   if (isAuthenticated) {
-    return <Navigate to="/dasboard" />;
+    return <Navigate to="/dashboard" />;
   }
 
   return (
