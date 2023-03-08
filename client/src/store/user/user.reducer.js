@@ -19,10 +19,12 @@ export const userReducer = (state = INITIAL_STATE, action) => {
         user: payload
       };
 
+    case USER_ACTION_TYPES.LOGIN_SUCCESS:
     case USER_ACTION_TYPES.REGISTER_SUCCESS:
       localStorage.setItem("token", payload.token);
       return { ...state, ...payload, isAuthenticated: true, isLoading: false };
 
+    case USER_ACTION_TYPES.LOGIN_FAILED:
     case USER_ACTION_TYPES.AUTH_ERROR:
     case USER_ACTION_TYPES.REGISTER_FAILED:
       localStorage.removeItem("token");

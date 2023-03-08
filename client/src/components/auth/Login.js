@@ -1,18 +1,19 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { connect } from "react-redux";
+
+import PropTypes from "prop-types";
+
+import { login } from "../../store/user/user.action";
 
 const defaultFormFields = {
   email: "",
   password: ""
 };
 
-const Login = () => {
+const Login = ({ login, isAuthenticated }) => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
-
-  // const resetFormFields = () => {
-  //   setFormFields(defaultFormFields);
-  // };
 
   const onChangeHandler = (event) => {
     const { name, value } = event.target;
@@ -22,8 +23,13 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    console.log("Success");
+    login(email, password);
   };
+
+  // Redirect if logged in
+  if (isAuthenticated) {
+    return <Navigate to="/dasboard" />;
+  }
 
   return (
     <>
@@ -63,4 +69,13 @@ const Login = () => {
   );
 };
 
-export default Login;
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool
+};
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.userReducer.isAuthenticated
+});
+
+export default connect(mapStateToProps, { login })(Login);

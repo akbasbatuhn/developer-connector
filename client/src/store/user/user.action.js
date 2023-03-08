@@ -44,6 +44,8 @@ export const register =
         type: USER_ACTION_TYPES.REGISTER_SUCCESS,
         payload: res.data
       });
+
+      dispatch(loadUser());
     } catch (error) {
       const errors = error.response.data.errors;
 
@@ -56,3 +58,35 @@ export const register =
       });
     }
   };
+
+// Login
+export const login = (email, password) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+
+  const body = JSON.stringify({ email, password });
+
+  try {
+    const res = await axios.post("/api/auth", body, config);
+
+    dispatch({
+      type: USER_ACTION_TYPES.LOGIN_SUCCESS,
+      payload: res.data
+    });
+
+    dispatch(loadUser());
+  } catch (error) {
+    const errors = error.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+    }
+
+    dispatch({
+      type: USER_ACTION_TYPES.LOGIN_FAILED
+    });
+  }
+};
