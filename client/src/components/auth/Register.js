@@ -104,7 +104,7 @@ Register.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.userReducer.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated
 });
 
 export default connect(mapStateToProps, { setAlert, register })(Register);
