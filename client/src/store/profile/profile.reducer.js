@@ -16,6 +16,8 @@ export const profileReducer = (state = initialState, action) => {
       return { ...state, profile: payload, isLoading: false };
     case PROFILE_ACTION_TYPES.PROFILE_ERROR:
       return { ...state, error: payload, isLoading: false };
+    case PROFILE_ACTION_TYPES.CLEAR_PROFILE:
+      return { ...state, profile: null, repos: [], isLoading: false };
     default:
       return state;
   }

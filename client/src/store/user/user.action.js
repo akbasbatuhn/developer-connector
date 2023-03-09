@@ -3,6 +3,7 @@ import axios from "axios";
 import setAuthToken from "../../utils/user.utils";
 
 import { setAlert } from "../alerts/alert.action";
+import { PROFILE_ACTION_TYPES } from "../profile/profile.types";
 import { USER_ACTION_TYPES } from "./user.types";
 
 // Load User
@@ -93,6 +94,9 @@ export const login = (email, password) => async (dispatch) => {
 
 // Logout
 export const logout = () => (dispatch) => {
+  dispatch({
+    type: PROFILE_ACTION_TYPES.CLEAR_PROFILE
+  });
   dispatch({
     type: USER_ACTION_TYPES.LOGOUT
   });
