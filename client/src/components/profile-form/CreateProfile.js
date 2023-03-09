@@ -136,7 +136,12 @@ const CreateProfile = (props) => {
           </small>
         </div>
         <div className="form-group">
-          <textarea placeholder="A short bio of yourself" name="bio"></textarea>
+          <textarea
+            placeholder="A short bio of yourself"
+            name="bio"
+            value={githubusername}
+            onChange={(e) => onChangeHandler(e)}
+          ></textarea>
           <small className="form-text">Tell us a little about yourself</small>
         </div>
 
