@@ -11,7 +11,7 @@ import Login from "./components/auth/Login";
 import Alert from "./components/layout/Alert";
 import Navbar from "./components/layout/Navbar";
 import Dashboard from "./components/dashboard/Dashboard";
-import ProfileForm from "./components/profile-form/CreateProfile";
+import ProfileForm from "./components/profile-form/ProfileForm";
 import PrivateRoute from "./components/routing/PrivateRoute";
 
 import "./App.css";
