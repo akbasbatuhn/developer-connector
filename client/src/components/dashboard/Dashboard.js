@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import { getCurrentProfile } from "../../store/profile/profile.actions";
 
 import Spinner from "../spinner/Spinner";
+import DashboardActions from "./DashboardActions";
 
 const Dashboard = ({
   getCurrentProfile,
@@ -28,7 +29,9 @@ const Dashboard = ({
             <i className="fas fa-user">Welcome {user && user.name}</i>
           </p>
           {profile !== null ? (
-            <>has</>
+            <>
+              <DashboardActions />
+            </>
           ) : (
             <>
               <p>You have not setup a profile, please add some info</p>
