@@ -139,7 +139,7 @@ const CreateProfile = (props) => {
           <textarea
             placeholder="A short bio of yourself"
             name="bio"
-            value={githubusername}
+            value={bio}
             onChange={(e) => onChangeHandler(e)}
           ></textarea>
           <small className="form-text">Tell us a little about yourself</small>
