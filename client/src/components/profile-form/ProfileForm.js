@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
-import { createProfile } from "../../store/profile/profile.actions";
+import {
+  createProfile,
+  getCurrentProfile
+} from "../../store/profile/profile.actions";
 
 import PropTypes from "prop-types";
 
@@ -21,10 +24,39 @@ const initialState = {
   instagram: ""
 };
 
-const CreateProfile = ({ createProfile }) => {
+const ProfileForm = ({
+  profile: { profile, isLoading },
+  createProfile,
+  getCurrentProfile
+}) => {
   const [formFields, setFormFields] = useState(initialState);
   const [displaySocialInputs, toggleSocialInputs] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // if there is no profile, attempt to fetch one
+    if (!profile) getCurrentProfile();
+
+    // if we finish loading and we do have a profile
+    // then build profile data
+    if (!isLoading && profile) {
+      const profileData = { ...initialState };
+      for (const key in profile) {
+        if (key in profileData) profileData[key] = profile.social[key];
+      }
+
+      for (const key in profile.social) {
+        if (key in profileData) profileData[key] = profile.social[key];
+      }
+
+      // the skills may be an array from our API response
+      if (Array.isArray(profileData.skills))
+        profileData.skills = profileData.skills.join(", ");
+
+      // set local state with the profileData
+      setFormFields(profileData);
+    }
+  }, [isLoading, getCurrentProfile, profile]);
 
   const {
     company,
@@ -69,12 +101,8 @@ const CreateProfile = ({ createProfile }) => {
       <small>* = required field</small>
       <form className="form" onSubmit={onSubmitHandler}>
         <div className="form-group">
-          <select
-            name="status"
-            value={status}
-            onChange={(e) => onChangeHandler(e)}
-          >
-            <option value="0">* Select Professional Status</option>
+          <select name="status" value={status} onChange={onChangeHandler}>
+            <option>* Select Professional Status</option>
             <option value="Developer">Developer</option>
             <option value="Junior Developer">Junior Developer</option>
             <option value="Senior Developer">Senior Developer</option>
@@ -94,7 +122,7 @@ const CreateProfile = ({ createProfile }) => {
             placeholder="Company"
             name="company"
             value={company}
-            onChange={(e) => onChangeHandler(e)}
+            onChange={onChangeHandler}
           />
           <small className="form-text">
             Could be your own company or one you work for
@@ -106,7 +134,7 @@ const CreateProfile = ({ createProfile }) => {
             placeholder="Website"
             name="website"
             value={website}
-            onChange={(e) => onChangeHandler(e)}
+            onChange={onChangeHandler}
           />
           <small className="form-text">
             Could be your own or a company website
@@ -118,7 +146,7 @@ const CreateProfile = ({ createProfile }) => {
             placeholder="Location"
             name="location"
             value={location}
-            onChange={(e) => onChangeHandler(e)}
+            onChange={onChangeHandler}
           />
           <small className="form-text">
             City & state suggested (eg. Boston, MA)
@@ -130,7 +158,7 @@ const CreateProfile = ({ createProfile }) => {
             placeholder="* Skills"
             name="skills"
             value={skills}
-            onChange={(e) => onChangeHandler(e)}
+            onChange={onChangeHandler}
           />
           <small className="form-text">
             Please use comma separated values (eg. HTML,CSS,JavaScript,PHP)
@@ -142,7 +170,7 @@ const CreateProfile = ({ createProfile }) => {
             placeholder="Github Username"
             name="githubusername"
             value={githubusername}
-            onChange={(e) => onChangeHandler(e)}
+            onChange={onChangeHandler}
           />
           <small className="form-text">
             If you want your latest repos and a Github link, include your
@@ -154,7 +182,7 @@ const CreateProfile = ({ createProfile }) => {
             placeholder="A short bio of yourself"
             name="bio"
             value={bio}
-            onChange={(e) => onChangeHandler(e)}
+            onChange={onChangeHandler}
           ></textarea>
           <small className="form-text">Tell us a little about yourself</small>
         </div>
@@ -179,7 +207,7 @@ const CreateProfile = ({ createProfile }) => {
                 placeholder="Twitter URL"
                 name="twitter"
                 value={twitter}
-                onChange={(e) => onChangeHandler(e)}
+                onChange={onChangeHandler}
               />
             </div>
 
@@ -190,7 +218,7 @@ const CreateProfile = ({ createProfile }) => {
                 placeholder="Facebook URL"
                 name="facebook"
                 value={facebook}
-                onChange={(e) => onChangeHandler(e)}
+                onChange={onChangeHandler}
               />
             </div>
 
@@ -201,7 +229,7 @@ const CreateProfile = ({ createProfile }) => {
                 placeholder="YouTube URL"
                 name="youtube"
                 value={youtube}
-                onChange={(e) => onChangeHandler(e)}
+                onChange={onChangeHandler}
               />
             </div>
 
@@ -212,7 +240,7 @@ const CreateProfile = ({ createProfile }) => {
                 placeholder="Linkedin URL"
                 name="linkedin"
                 value={linkedin}
-                onChange={(e) => onChangeHandler(e)}
+                onChange={onChangeHandler}
               />
             </div>
 
@@ -223,7 +251,7 @@ const CreateProfile = ({ createProfile }) => {
                 placeholder="Instagram URL"
                 name="instagram"
                 value={instagram}
-                onChange={(e) => onChangeHandler(e)}
+                onChange={onChangeHandler}
               />
             </div>
           </>
@@ -237,10 +265,16 @@ const CreateProfile = ({ createProfile }) => {
   );
 };
 
-CreateProfile.propTypes = {
-  createProfile: PropTypes.func.isRequired
+ProfileForm.propTypes = {
+  createProfile: PropTypes.func.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired,
+  profile: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  profile: state.profile
+});
 
-export default connect(mapStateToProps, { createProfile })(CreateProfile);
+export default connect(mapStateToProps, { createProfile, getCurrentProfile })(
+  ProfileForm
+);

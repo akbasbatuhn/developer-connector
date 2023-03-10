@@ -11,7 +11,7 @@ import Login from "./components/auth/Login";
 import Alert from "./components/layout/Alert";
 import Navbar from "./components/layout/Navbar";
 import Dashboard from "./components/dashboard/Dashboard";
-import CreateProfile from "./components/profile-form/CreateProfile";
+import ProfileForm from "./components/profile-form/CreateProfile";
 import PrivateRoute from "./components/routing/PrivateRoute";
 
 import "./App.css";
@@ -30,23 +30,24 @@ const App = () => {
       <Alert />
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route exact path="register" element={<Register />} />
-        <Route exact path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
+        <Route path="login" element={<Login />} />
 
         <Route
           path="dashboard"
-          element={
-            <PrivateRoute exact path="/dashboard" component={Dashboard} />
-          }
+          element={<PrivateRoute path="/dashboard" component={Dashboard} />}
         />
         <Route
           path="create-profile"
           element={
-            <PrivateRoute
-              exact
-              path="/create-profile"
-              component={CreateProfile}
-            />
+            <PrivateRoute path="/create-profile" component={ProfileForm} />
+          }
+        />
+
+        <Route
+          path="edit-profile"
+          element={
+            <PrivateRoute path="/edit-profile" component={ProfileForm} />
           }
         />
       </Routes>
