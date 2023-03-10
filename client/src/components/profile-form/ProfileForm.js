@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useMatch, useNavigate } from "react-router-dom";
 
 import {
   createProfile,
@@ -31,6 +31,7 @@ const ProfileForm = ({
 }) => {
   const [formFields, setFormFields] = useState(initialState);
   const [displaySocialInputs, toggleSocialInputs] = useState(false);
+  const creatingProfile = useMatch("/create-profile");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,7 +43,7 @@ const ProfileForm = ({
     if (!isLoading && profile) {
       const profileData = { ...initialState };
       for (const key in profile) {
-        if (key in profileData) profileData[key] = profile.social[key];
+        if (key in profileData) profileData[key] = profile[key];
       }
 
       for (const key in profile.social) {
@@ -88,15 +89,20 @@ const ProfileForm = ({
   const onSubmitHandler = (event) => {
     event.preventDefault();
 
-    createProfileAndNavigate(formFields);
+    const editing = profile ? true : false;
+    createProfileAndNavigate(formFields, editing);
   };
 
   return (
     <div className="container">
-      <h1 className="large text-primary">Create Your Profile</h1>
+      <h1 className="large text-primary">
+        {creatingProfile ? "Create Your Profile" : "Edit Your Profile"}
+      </h1>
       <p className="lead">
-        <i className="fas fa-user"></i> Let's get some information to make your
-        profile stand out
+        <i className="fas fa-user"></i>{" "}
+        {creatingProfile
+          ? "Let's get some information to make your profile stand out"
+          : "Add some changes to your profile"}
       </p>
       <small>* = required field</small>
       <form className="form" onSubmit={onSubmitHandler}>
