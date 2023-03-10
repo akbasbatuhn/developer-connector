@@ -33,7 +33,8 @@ export const userReducer = (state = INITIAL_STATE, action) => {
         ...state,
         token: null,
         isAuthenticated: false,
-        isLoading: false
+        isLoading: false,
+        user: null
       };
 
     default:
