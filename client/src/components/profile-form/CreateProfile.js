@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+
+import { createProfile } from "../../store/profile/profile.actions";
 
 import PropTypes from "prop-types";
 
@@ -18,10 +21,10 @@ const initialState = {
   instagram: ""
 };
 
-const CreateProfile = (props) => {
+const CreateProfile = ({ createProfile }) => {
   const [formFields, setFormFields] = useState(initialState);
-
   const [displaySocialInputs, toggleSocialInputs] = useState(false);
+  const navigate = useNavigate();
 
   const {
     company,
@@ -45,6 +48,17 @@ const CreateProfile = (props) => {
   const onChangeHandler = (event) =>
     setFormFields({ ...formFields, [event.target.name]: event.target.value });
 
+  const createProfileAndNavigate = async (formFields) => {
+    await createProfile(formFields);
+    navigate("/dashboard");
+  };
+
+  const onSubmitHandler = (event) => {
+    event.preventDefault();
+
+    createProfileAndNavigate(formFields);
+  };
+
   return (
     <div className="container">
       <h1 className="large text-primary">Create Your Profile</h1>
@@ -53,7 +67,7 @@ const CreateProfile = (props) => {
         profile stand out
       </p>
       <small>* = required field</small>
-      <form className="form">
+      <form className="form" onSubmit={onSubmitHandler}>
         <div className="form-group">
           <select
             name="status"
@@ -223,8 +237,10 @@ const CreateProfile = (props) => {
   );
 };
 
-CreateProfile.propTypes = {};
+CreateProfile.propTypes = {
+  createProfile: PropTypes.func.isRequired
+};
 
-const mapStateToProps = (state) => {};
+const mapStateToProps = (state) => ({});
 
-export default connect(mapStateToProps)(CreateProfile);
+export default connect(mapStateToProps, { createProfile })(CreateProfile);
