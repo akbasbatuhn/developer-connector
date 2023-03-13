@@ -20,6 +20,61 @@ export const getCurrentProfile = () => async (dispatch) => {
   }
 };
 
+// Get all profiles
+export const getAllProfiles = () => async (dispatch) => {
+  dispatch({
+    type: PROFILE_ACTION_TYPES.CLEAR_PROFILE
+  });
+
+  try {
+    const res = await axios.get("/api/profile");
+
+    dispatch({
+      type: PROFILE_ACTION_TYPES.GET_ALL_PROFILES,
+      payload: res.data
+    });
+  } catch (error) {
+    dispatch({
+      type: PROFILE_ACTION_TYPES.PROFILE_ERROR,
+      payload: { msg: error.response.data.msg, status: error.response.status }
+    });
+  }
+};
+
+// Get profile by ID
+export const getAllProfileById = (userId) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/profile/user/${userId}`);
+
+    dispatch({
+      type: PROFILE_ACTION_TYPES.GET_ALL_PROFILES,
+      payload: res.data
+    });
+  } catch (error) {
+    dispatch({
+      type: PROFILE_ACTION_TYPES.PROFILE_ERROR,
+      payload: { msg: error.response.data.msg, status: error.response.status }
+    });
+  }
+};
+
+// Get Github repos
+export const getGithubRepos = (username) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/profile/github/${username}`);
+
+    dispatch({
+      type: PROFILE_ACTION_TYPES.GET_REPOS,
+      payload: res.data
+    });
+  } catch (error) {
+    dispatch({
+      type: PROFILE_ACTION_TYPES.PROFILE_ERROR,
+      payload: { msg: error.response.data.msg, status: error.response.status }
+    });
+  }
+};
+
 // Create or update profile
 export const createProfile =
   (formData, edit = false) =>
