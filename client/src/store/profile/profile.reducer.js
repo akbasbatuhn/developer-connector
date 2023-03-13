@@ -12,6 +12,7 @@ export const profileReducer = (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case PROFILE_ACTION_TYPES.UPDATE_PROFILE:
     case PROFILE_ACTION_TYPES.GET_PROFILE:
       return { ...state, profile: payload, isLoading: false };
     case PROFILE_ACTION_TYPES.PROFILE_ERROR:

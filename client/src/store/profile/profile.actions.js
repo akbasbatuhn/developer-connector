@@ -47,3 +47,55 @@ export const createProfile =
       });
     }
   };
+
+// Add experience
+export const addExperience = (formData) => async (dispatch) => {
+  try {
+    const res = await axios.put("/api/profile/experience", formData);
+
+    dispatch({
+      type: PROFILE_ACTION_TYPES.UPDATE_PROFILE,
+      payload: res.data
+    });
+
+    dispatch(setAlert("Experience added", "success"));
+    return res.data;
+  } catch (error) {
+    const errors = error.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+    }
+
+    dispatch({
+      type: PROFILE_ACTION_TYPES.PROFILE_ERROR,
+      payload: { msg: error.response.data.msg, status: error.response.status }
+    });
+  }
+};
+
+// Add education
+export const addEducation = (formData) => async (dispatch) => {
+  try {
+    const res = await axios.put("/api/profile/education", formData);
+
+    dispatch({
+      type: PROFILE_ACTION_TYPES.UPDATE_PROFILE,
+      payload: res.data
+    });
+
+    dispatch(setAlert("Education added", "success"));
+    return res.data;
+  } catch (error) {
+    const errors = error.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+    }
+
+    dispatch({
+      type: PROFILE_ACTION_TYPES.PROFILE_ERROR,
+      payload: { msg: error.response.data.msg, status: error.response.status }
+    });
+  }
+};
