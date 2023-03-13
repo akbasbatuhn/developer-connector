@@ -15,6 +15,7 @@ import ProfileForm from "./components/profile-form/ProfileForm";
 import PrivateRoute from "./components/routing/PrivateRoute";
 import AddExperience from "./components/profile-form/AddExperience";
 import AddEducation from "./components/profile-form/AddEducation";
+import Profiles from "./components/profiles/Profiles";
 
 import "./App.css";
 
@@ -34,6 +35,7 @@ const App = () => {
         <Route path="/" element={<Landing />} />
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
+        <Route path="profiles" element={<Profiles />} />
 
         <Route
           path="dashboard"
