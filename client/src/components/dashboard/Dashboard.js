@@ -8,6 +8,8 @@ import { getCurrentProfile } from "../../store/profile/profile.actions";
 
 import Spinner from "../spinner/Spinner";
 import DashboardActions from "./DashboardActions";
+import Experience from "./Experience";
+import Education from "./Education";
 
 const Dashboard = ({
   getCurrentProfile,
@@ -31,6 +33,8 @@ const Dashboard = ({
           {profile !== null ? (
             <>
               <DashboardActions />
+              <Experience experience={profile.experience} />
+              <Education education={profile.education} />
             </>
           ) : (
             <>
