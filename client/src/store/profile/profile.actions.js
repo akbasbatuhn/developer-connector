@@ -99,3 +99,59 @@ export const addEducation = (formData) => async (dispatch) => {
     });
   }
 };
+
+// Delete experience
+export const deleteExperience = (id) => async (dispatch) => {
+  try {
+    const res = await axios.delete(`/api/profile/experience/${id}`);
+
+    dispatch({
+      type: PROFILE_ACTION_TYPES.UPDATE_PROFILE,
+      payload: res.data
+    });
+
+    dispatch(setAlert("Experience removed", "success"));
+  } catch (error) {
+    dispatch({
+      type: PROFILE_ACTION_TYPES.PROFILE_ERROR,
+      payload: { msg: error.response.data.msg, status: error.response.status }
+    });
+  }
+};
+
+// Delete education
+export const deleteEducation = (id) => async (dispatch) => {
+  try {
+    const res = await axios.delete(`/api/profile/education/${id}`);
+
+    dispatch({
+      type: PROFILE_ACTION_TYPES.UPDATE_PROFILE,
+      payload: res.data
+    });
+
+    dispatch(setAlert("Education removed", "success"));
+  } catch (error) {
+    dispatch({
+      type: PROFILE_ACTION_TYPES.PROFILE_ERROR,
+      payload: { msg: error.response.data.msg, status: error.response.status }
+    });
+  }
+};
+
+// Delete profile
+export const deleteProfile = () => async (dispatch) => {
+  try {
+    await axios.delete(`/api/profile/`);
+
+    dispatch({
+      type: PROFILE_ACTION_TYPES.DELETE_PROFILE
+    });
+
+    dispatch(setAlert("Your profile has been permanently deleted"));
+  } catch (error) {
+    dispatch({
+      type: PROFILE_ACTION_TYPES.PROFILE_ERROR,
+      payload: { msg: error.response.data.msg, status: error.response.status }
+    });
+  }
+};

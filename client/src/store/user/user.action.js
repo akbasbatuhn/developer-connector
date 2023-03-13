@@ -3,6 +3,7 @@ import axios from "axios";
 import setAuthToken from "../../utils/user.utils";
 
 import { setAlert } from "../alerts/alert.action";
+import { deleteProfile } from "../profile/profile.actions";
 import { PROFILE_ACTION_TYPES } from "../profile/profile.types";
 import { USER_ACTION_TYPES } from "./user.types";
 
@@ -100,4 +101,28 @@ export const logout = () => (dispatch) => {
   dispatch({
     type: USER_ACTION_TYPES.LOGOUT
   });
+};
+
+// Delete account & profile
+export const deleteAccount = () => async (dispatch) => {
+  if (window.confirm("Are you sure? This can NOT be undone!")) {
+    try {
+      await axios.delete("/api/users");
+
+      dispatch(logout());
+
+      dispatch({
+        type: USER_ACTION_TYPES.DELETE_ACCOUNT
+      });
+
+      dispatch(deleteProfile());
+
+      dispatch(setAlert("Your account has been permanently deleted"));
+    } catch (error) {
+      dispatch({
+        type: PROFILE_ACTION_TYPES.PROFILE_ERROR,
+        payload: { msg: error.response.data.msg, status: error.response.status }
+      });
+    }
+  }
 };

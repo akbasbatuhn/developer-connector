@@ -28,6 +28,7 @@ export const userReducer = (state = INITIAL_STATE, action) => {
     case USER_ACTION_TYPES.AUTH_ERROR:
     case USER_ACTION_TYPES.REGISTER_FAILED:
     case USER_ACTION_TYPES.LOGOUT:
+    case USER_ACTION_TYPES.DELETE_ACCOUNT:
       localStorage.removeItem("token");
       return {
         ...state,
