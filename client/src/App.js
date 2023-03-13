@@ -17,6 +17,8 @@ import AddExperience from "./components/profile-form/AddExperience";
 import AddEducation from "./components/profile-form/AddEducation";
 import Profiles from "./components/profiles/Profiles";
 
+import { USER_ACTION_TYPES } from "./store/user/user.types";
+
 import "./App.css";
 
 if (localStorage.token) {
@@ -25,7 +27,20 @@ if (localStorage.token) {
 
 const App = () => {
   useEffect(() => {
-    store.dispatch(loadUser);
+    // check for token in LS when app first runs
+    if (localStorage.token) {
+      // if there is a token set axios headers for all requests
+      setAuthToken(localStorage.token);
+    }
+    // try to fetch a user, if no token or invalid token we
+    // will get a 401 response from API
+    store.dispatch(loadUser());
+
+    // log user out from all tabs if they log out in one tab
+    window.addEventListener("storage", () => {
+      if (!localStorage.token)
+        store.dispatch({ type: USER_ACTION_TYPES.LOGOUT });
+    });
   }, []);
   return (
     <>
