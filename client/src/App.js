@@ -16,6 +16,7 @@ import PrivateRoute from "./components/routing/PrivateRoute";
 import AddExperience from "./components/profile-form/AddExperience";
 import AddEducation from "./components/profile-form/AddEducation";
 import Profiles from "./components/profiles/Profiles";
+import Profile from "./components/profile/Profile";
 
 import { USER_ACTION_TYPES } from "./store/user/user.types";
 
@@ -51,6 +52,7 @@ const App = () => {
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
         <Route path="profiles" element={<Profiles />} />
+        <Route path="profile/:id" element={<Profile />} />
 
         <Route
           path="dashboard"
