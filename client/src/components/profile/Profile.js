@@ -6,6 +6,8 @@ import PropTypes from "prop-types";
 
 import { getProfileById } from "../../store/profile/profile.actions";
 
+import ProfileTop from "./ProfileTop";
+import ProfileAbout from "./ProfileAbout";
 import Spinner from "../spinner/Spinner";
 
 const Profile = ({ profile: { profile, isLoading }, auth, getProfileById }) => {
@@ -31,6 +33,10 @@ const Profile = ({ profile: { profile, isLoading }, auth, getProfileById }) => {
                 Edit Profile
               </Link>
             )}
+          <div className="profile-grid my-1">
+            <ProfileTop profile={profile} />
+            <ProfileAbout profile={profile} />
+          </div>
         </>
       )}
     </div>
