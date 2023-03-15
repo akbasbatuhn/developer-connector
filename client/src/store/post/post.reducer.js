@@ -33,6 +33,23 @@ export const postReducer = (state = INITIAL_STATE, action) => {
         ),
         isLoading: false
       };
+    case POST_ACTION_TYPES.ADD_COMMENT:
+      return {
+        ...state,
+        post: { ...state.post, comments: payload },
+        isLoading: false
+      };
+    case POST_ACTION_TYPES.REMOVE_COMMENT:
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          comments: state.post.comments.filter(
+            (comment) => comment._id !== payload
+          ),
+          isLoading: false
+        }
+      };
     default:
       return state;
   }

@@ -8,6 +8,8 @@ import { getPost } from "../../store/post/post.action";
 
 import PostItem from "../posts/PostItem";
 import Spinner from "../spinner/Spinner";
+import CommentForm from "./CommentForm";
+import CommentItem from "./CommentItem";
 
 const Post = ({ getPost, post: { post, isLoading } }) => {
   const { id } = useParams();
@@ -24,6 +26,12 @@ const Post = ({ getPost, post: { post, isLoading } }) => {
         Back to Posts
       </Link>
       <PostItem post={post} />
+      <CommentForm postId={post._id} />
+      <div className="comments">
+        {post.comments.map((comment) => (
+          <CommentItem key={comment.id} comment={comment} postId={post._id} />
+        ))}
+      </div>
     </div>
   );
 };
