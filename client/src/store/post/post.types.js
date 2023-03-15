@@ -1,5 +1,6 @@
 export const POST_ACTION_TYPES = {
   GET_POSTS: "post/GET_POSTS",
+  GET_POST: "post/GET_POST",
   POST_ERROR: "post/POST_ERROR",
   UPDATE_LIKES: "post/UPDATE_LIKES",
   DELETE_POST: "post/DELETE_POST",
