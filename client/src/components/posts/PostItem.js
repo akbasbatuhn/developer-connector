@@ -6,9 +6,13 @@ import PropTypes from "prop-types";
 
 import { formatDate } from "../../utils/format-date.utils";
 
+import { likePost, removeLike } from "../../store/post/post.action";
+
 const PostItem = ({
   auth,
-  post: { _id, text, name, avatar, user, likes, comments, date }
+  post: { _id, text, name, avatar, user, likes, comments, date },
+  likePost,
+  removeLike
 }) => {
   return (
     <div class="post bg-white p-1 my-1">
@@ -22,11 +26,19 @@ const PostItem = ({
         <p class="my-1">{text}</p>
         <p class="post-date">Posted on {formatDate(date)}</p>
 
-        <button type="button" class="btn btn-light">
+        <button
+          type="button"
+          class="btn btn-light"
+          onClick={() => likePost(_id)}
+        >
           <i class="fas fa-thumbs-up"></i>
-          <span>{likes.length > 0 && <span>{likes.length > 0}</span>}</span>
+          <span>{likes.length > 0 && <span>{likes.length}</span>}</span>
         </button>
-        <button type="button" class="btn btn-light">
+        <button
+          type="button"
+          class="btn btn-light"
+          onClick={() => removeLike(_id)}
+        >
           <i class="fas fa-thumbs-down"></i>
         </button>
         <Link to={`/posts/${_id}`} class="btn btn-primary">
@@ -54,4 +66,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, {})(PostItem);
+export default connect(mapStateToProps, { likePost, removeLike })(PostItem);
