@@ -14,7 +14,7 @@ export const getPosts = () => async (dispatch) => {
     });
   } catch (error) {
     dispatch({
-      type: POST_ACTION_TYPES.PROFILE_ERROR,
+      type: POST_ACTION_TYPES.POST_ERROR,
       payload: { msg: error.response.data.msg, status: error.response.status }
     });
   }
@@ -31,7 +31,7 @@ export const likePost = (postId) => async (dispatch) => {
     });
   } catch (error) {
     dispatch({
-      type: POST_ACTION_TYPES.PROFILE_ERROR,
+      type: POST_ACTION_TYPES.POST_ERROR,
       payload: { msg: error.response.data.msg, status: error.response.status }
     });
   }
@@ -48,7 +48,7 @@ export const removeLike = (postId) => async (dispatch) => {
     });
   } catch (error) {
     dispatch({
-      type: POST_ACTION_TYPES.PROFILE_ERROR,
+      type: POST_ACTION_TYPES.POST_ERROR,
       payload: { msg: error.response.data.msg, status: error.response.status }
     });
   }
@@ -68,6 +68,25 @@ export const deletePost = (postId) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: POST_ACTION_TYPES.PROFILE_ERROR,
+      payload: { msg: error.response.data.msg, status: error.response.status }
+    });
+  }
+};
+
+// Add post
+export const addPost = (formData) => async (dispatch) => {
+  try {
+    const res = await axios.post("/api/posts/", formData);
+
+    dispatch({
+      type: POST_ACTION_TYPES.ADD_POST,
+      payload: res.data
+    });
+
+    dispatch(setAlert("Post created", "success"));
+  } catch (error) {
+    dispatch({
+      type: POST_ACTION_TYPES.POST_ERROR,
       payload: { msg: error.response.data.msg, status: error.response.status }
     });
   }
