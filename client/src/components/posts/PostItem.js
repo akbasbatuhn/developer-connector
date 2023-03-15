@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import PropTypes from "prop-types";
 
@@ -15,6 +15,14 @@ const PostItem = ({
   removeLike,
   deletePost
 }) => {
+  const navigate = useNavigate();
+
+  const onClickHandler = (e) => {
+    e.preventDefault();
+    deletePost(_id);
+    navigate("/posts");
+  };
+
   return (
     <div className="post bg-white p-1 my-1">
       <div>
@@ -50,7 +58,7 @@ const PostItem = ({
         </Link>
         {!auth.isLoading && user === auth.user._id && (
           <button
-            onClick={() => deletePost(_id)}
+            onClick={onClickHandler}
             type="button"
             className="btn btn-danger"
           >
