@@ -4,7 +4,13 @@ import { connect } from "react-redux";
 
 import PropTypes from "prop-types";
 
-const PrivateRoute = ({ component: Component, auth: { isAuthenticated } }) => {
+import Spinner from "../spinner/Spinner";
+
+const PrivateRoute = ({
+  component: Component,
+  auth: { isAuthenticated, isLoading }
+}) => {
+  if (isLoading) return <Spinner />;
   if (isAuthenticated) return <Component />;
 
   return <Navigate to="/login" />;
