@@ -13,6 +13,12 @@ export const postReducer = (state = INITIAL_STATE, action) => {
   switch (type) {
     case POST_ACTION_TYPES.GET_POSTS:
       return { ...state, posts: payload, isLoading: false };
+    case POST_ACTION_TYPES.DELETE_POST:
+      return {
+        ...state,
+        posts: state.posts.filter((post) => post._id !== payload),
+        isLoading: false
+      };
     case POST_ACTION_TYPES.POST_ERROR:
       return { ...state, isLoading: false, error: payload };
     case POST_ACTION_TYPES.UPDATE_LIKES:
